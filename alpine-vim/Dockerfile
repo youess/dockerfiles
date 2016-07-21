@@ -2,9 +2,9 @@
 FROM alpine
 
 RUN apk update && \
-	apk add git \
-			vim \
-			ctags
+    apk add git \
+            vim \
+            ctags
 
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 

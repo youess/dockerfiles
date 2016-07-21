@@ -3,8 +3,6 @@ let g:mapleader = ','
 set nocompatible
 filetype off
 
-autocmd! bufwritepost .vimrc source %
-au BufWritePost .vimrc so ~/.vimrc
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -104,8 +102,8 @@ let g:rainbow_conf = {
 \   'separately': {
 \       '*': {},
 \       'lisp': {
-\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3',                     'firebrick', 'darkorchid3'],
-\           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta',                     'darkcyan', 'darkred', 'darkgreen'],
+\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta','darkcyan', 'darkred', 'darkgreen'],
 \       },
 \       'html': {
 \           'parentheses': [['(',')'], ['\[','\]'], ['{','}'],      ['<^>]*[^/]>\|<','</[^>]*>']],
@@ -167,7 +165,7 @@ Plugin 'plasticboy/vim-markdown'
 let g:vim_markdown_no_default_key_mappings=1
 
 Plugin 'tomasr/molokai'
-Plugin 'michalbachowski/vim-wombat256mod'
+" Plugin 'michalbachowski/vim-wombat256mod'
 
 " html css completion
 Plugin 'mattn/emmet-vim'
@@ -179,10 +177,10 @@ call vundle#end()
 filetype plugin indent on
 
 
-colorscheme pablo
+" colorscheme pablo
 " colorscheme molokai
-let g:molokai_original = 1
-let g:rehash256 = 1
+" let g:molokai_original = 1
+" let g:rehash256 = 1
 
 nnoremap U <C-r>
 

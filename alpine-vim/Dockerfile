@@ -20,8 +20,9 @@ RUN apk add --update --virtual \
     ncurses-dev \
     python \
     python-dev \
-    ctags && \ 
-    git clone --depth 1 https://github.com/vim/vim.git /tmp/vim && \
+    ctags
+
+RUN git clone -b 'v7.4.052' --single-branch --depth=1 https://github.com/vim/vim.git /tmp/vim && \
     cd /tmp/vim && \
     ./configure --with-features=big \
         --enable-multibyte \
@@ -32,7 +33,6 @@ RUN apk add --update --virtual \
         --prefix /usr && \
     make VIMRUNTIMEDIR=/usr/share/vim/vim74 && \
     make install && \
-    apk del build-deps && \
     rm -rf /usr/share/man/* \
           /usr/share/icons/* \
           /usr/share/doc/* \
@@ -46,11 +46,18 @@ RUN apk add --update --virtual \
           /var/tmp/* && \
     find /usr/share/vim/vim74/ -name *.txt | while read line; do rm "$line"; done
 
-RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+RUN git clone --depth=1 https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 # COPY vimrc /etc/vim/vimrc
-COPY vimrc root/.vimrc
+COPY vimrc /root/.vimrc
 
-RUN vim +PluginInstall  +qall
+# RUN update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1 && \
+#  update-alternatives --set editor /usr/bin/vim && \
+#  update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1 && \
+#  update-alternatives --set vi /usr/bin/vim
+
+RUN vim +PluginInstall +qall
+
+WORKDIR /root
 
 CMD ["vim"]

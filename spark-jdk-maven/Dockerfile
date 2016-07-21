@@ -4,7 +4,7 @@ FROM ubuntu:14.04
 MAINTAINER misaki007 <denis_lton@hotmail.com>
 
 # remove the mirror if no need to use taobao mirror
-COPY sources.list /etc/apt/sources.list
+# COPY sources.list /etc/apt/sources.list
 
 # basic setup
 RUN apt-get update \

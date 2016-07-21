@@ -1,0 +1,294 @@
+let g:mapleader = ','
+
+set nocompatible
+filetype off
+
+autocmd! bufwritepost .vimrc source %
+au BufWritePost .vimrc so ~/.vimrc
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" only use single quote('') around the name of plugin
+Plugin 'VundleVim/Vundle.vim'
+
+" Add other Plugin
+
+Plugin 'bronson/vim-trailing-whitespace'
+map <leader><Space> :FixWhitespace<CR>
+
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+
+Plugin 'scrooloose/nerdtree'
+map <leader>n :NERDTreeToggle<CR>
+let NERDTreeHighlightCursorline=1
+let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$',     '^\.git$', '^\.svn$', '^\.hg$', '\.exe$', '\.dll' ]
+" close vim if only NERDTree window exists.
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType=="primary") | q | end
+
+Plugin 'Shougo/neocomplcache.vim'
+Plugin 'Shougo/neocomplete'
+Plugin 'osyo-manga/neocomplcache-clang_complete'
+
+let g:neocomplete#enable_ignore_case = 0
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<tab>"
+
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+" enable the menu and pydoc preview to get most useful information
+set completeopt=menuone,longest,preview
+" when there is a dot completion in python script, occuring freezing
+let g:pymode_rope = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope_guess_project = 0
+
+Plugin 'jiangmiao/auto-pairs'
+
+Plugin 'Lokaltog/vim-powerline'
+let g:Powerline_symbols = 'unicode'
+
+Plugin 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType="context"
+
+Plugin 'Lokaltog/vim-easymotion'
+
+Plugin 'tmhedberg/matchit'
+
+Plugin 'scrooloose/nerdcommenter'
+" make comment with a space
+let NERDSpaceDelims=1
+
+Plugin 'kien/ctrlp.vim'
+let g:ctrlp_map='<leader>p'
+let g:ctrlp_cmd='CtrlP'
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height=15
+let g:ctrlp_match_window_reversed=0
+let g:ctrlp_mruf_max=500
+let g:ctrlp_follow_symlinks=1
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*\tmp\*,*.swp,*.zip,*.exe  " Windows
+let g:ctrlp_custom_ignore={
+    \ 'dir': '\/]\.(git|hg|svn|rvm)$',
+    \ 'file': '.(exe|so|dll|zip|tar|tar.gz)$',
+    \}
+
+Plugin 'luochen1990/rainbow'
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+\   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\   'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan'],
+\   'operators': '_,_',
+\   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+\   'separately': {
+\       '*': {},
+\       'lisp': {
+\           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3',                     'firebrick', 'darkorchid3'],
+\           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta',                     'darkcyan', 'darkred', 'darkgreen'],
+\       },
+\       'html': {
+\           'parentheses': [['(',')'], ['\[','\]'], ['{','}'],      ['<^>]*[^/]>\|<','</[^>]*>']],
+\       },
+\       'tex': {
+\           'operators': '',
+\           'parentheses': [['(',')'], ['\[','\]']],
+\       },
+\   }
+\}
+
+Plugin 'fholgado/minibufexpl.vim'
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplForceSyntaxEnable = 1
+let g:miniBufExplorerMoreThanOne=2
+let g:miniBufExplCycleArround=1
+nnoremap <TAB> :MBEbn<CR>
+noremap <leader>bn :MBEbn<CR>
+noremap <leader>bp :MBEbp<CR>
+noremap <leader>bd :MBEbd<CR>
+
+Plugin 'majutsushi/tagbar'
+nmap <leader>tt :TagbarToggle<cr>
+let g:tagbar_type_r = {
+    \ 'ctagstype' : 'r',
+    \ 'kinds'     : [
+        \ 'f:Functions',
+        \ 'g:GlobalVariables',
+    \ ]
+\ }
+
+Plugin 'vim-scripts/winmanager'
+let g:winManagerWindowLayout = "BufExplorer"
+
+let g:winManagerWidth = 40
+" nmap nw :NERDTreeToggle<CR> :TlistToggle<CR>
+nmap nw :WMToggle<CR>
+
+let g:NERDTree_title="[NERDTree]"
+function! NERDTree_Start()
+    exe 'NERDTree'
+endfunction
+function! NERDTree_IsValid()
+    return 1
+endfunction
+
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
+
+" multiple cursors
+Plugin 'terryma/vim-multiple-cursors'
+
+" markdown preview
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+let g:vim_markdown_no_default_key_mappings=1
+
+Plugin 'tomasr/molokai'
+Plugin 'michalbachowski/vim-wombat256mod'
+
+" html css completion
+Plugin 'mattn/emmet-vim'
+" let g:user_emmet_leader_key=','
+" let g:user_emmet_install_global=0
+" autocmd FileType html,css EmmetInstall
+
+call vundle#end()
+filetype plugin indent on
+
+
+colorscheme pablo
+" colorscheme molokai
+let g:molokai_original = 1
+let g:rehash256 = 1
+
+nnoremap U <C-r>
+
+map <leader>sa ggVG
+
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+nmap <leader>hl :nohl<CR>
+
+cnoremap <C-j> <t_kd>
+cnoremap <C-k> <t_ku>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+inoremap <C-j> <t_kd>
+inoremap <C-k> <t_ku>
+inoremap <C-a> <Home>
+inoremap <C-e> <End>
+
+map <c-h> <c-w>h
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+
+" shortcut for split the windows
+map <leader>s :split<CR>
+map <leader>vs :vsplit<CR>
+
+map <leader>q :q <CR>
+
+
+" file coding format style
+set encoding=utf-8                " vim internal format
+set fileencoding=utf-8            " current file
+
+" file format
+set fileformat=unix
+set fileformats=unix,dos,mac
+
+set incsearch
+set hlsearch
+set ignorecase
+syntax enable
+syntax on
+set ruler
+set showmode
+set showcmd
+set nu
+set relativenumber number
+au FocusLost * :set norelativenumber number
+au FocusGained * :set relativenumber
+autocmd InsertEnter * :set norelativenumber number
+autocmd InsertLeave * :set relativenumber
+function! ToggleNumber()
+    if (&relativenumber==&number)
+        set relativenumber! number!
+    elseif (&number)
+        set number!
+    else
+        set relativenumber!
+    endif
+    set number?
+endfunc
+nnoremap <leader>2 :call ToggleNumber() <CR>
+set pastetoggle=<leader>5
+set wildmenu
+set wildignore=*.swp,*.bak,*.pyc,*.class,*.out
+set autoread
+set cursorline
+set nobackup
+set noswapfile
+set autoindent
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+if has("autocmd")
+    " autocmd FileType r,css,html,javascript setlocal ts=2 sts=2 sw=2
+    autocmd FileType py set ts=2 sts=2 sw=2
+endif
+set smarttab
+set expandtab
+set shiftround
+set hidden
+set wildmode=list:longest
+set ttyfast
+set magic
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+set gcr=a:block-blinkon0
+
+" auto change directory to current editing file dir
+au BufRead, BufNewFile, BufEnter * cd %:p:h
+
+hi! link SignColumn   LineNr
+hi! link ShowMarksHLl DiffAdd
+hi! link ShowMarksHLu DiffChange
+
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellCap term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellRare term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal term=underline cterm=underline
+
+nmap <F5> :% s/\r//g<CR>

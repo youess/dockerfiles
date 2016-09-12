@@ -1,3 +1,8 @@
+# Build vim with alpine, but really, if you want to use fully vim functions,
+# and install some plugins, it required many dependencies. The default apline
+# vim binary version do not support python, and you build from source, and
+# install the dependency software. Actually you found the finnal image is
+# much bigger than you expected.
 
 FROM alpine
 
@@ -22,6 +27,7 @@ RUN apk add --update --virtual \
     python-dev \
     ctags
 
+# use the ubuntu 14.04 version of vim, latest one really easily occured errors.
 RUN git clone -b 'v7.4.052' --single-branch --depth=1 https://github.com/vim/vim.git /tmp/vim && \
     cd /tmp/vim && \
     ./configure --with-features=big \
